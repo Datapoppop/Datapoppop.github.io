@@ -1,101 +1,1602 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" class="scroll-smooth">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ฉันเป็นเพื่อนแบบไหน?</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600;700&display=swap">
+<title>ฉันเป็นเพื่อนแบบไหน? — แบบประเมินมิตรภาพ</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&family=Prompt:wght@500;600;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Anuphan', 'system-ui', 'sans-serif'],
+          display: ['Prompt', 'Anuphan', 'sans-serif'],
+        },
+        colors: {
+          brand: {
+            50: '#fff5f2',
+            100: '#ffe8e0',
+            200: '#ffd2c4',
+            300: '#ffb099',
+            400: '#ff8563',
+            500: '#ff6b42',
+            600: '#f04e23',
+          }
+        }
+      }
+    }
+  }
+</script>
 <style>
-:root{--bg:#fff8f0;--card:#fff;--ink:#2b2433;--mut:#7a7185;--pri:#ff7a59;--pri2:#ffe3d9;--line:#eadfd6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1824;--card:#2a2333;--ink:#f4eef8;--mut:#a89fb3;--pri:#ff8f70;--pri2:#4a2f2c;--line:#3d3447}}
-:root[data-theme="dark"]{--bg:#1d1824;--card:#2a2333;--ink:#f4eef8;--mut:#a89fb3;--pri:#ff8f70;--pri2:#4a2f2c;--line:#3d3447}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans Thai",system-ui,sans-serif;line-height:1.6}
-.wrap{max-width:560px;margin:0 auto;padding:20px 16px 40px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px 20px}
-h1{font-size:26px;margin:0 0 8px}h2{font-size:20px;margin:0 0 6px}
-p{margin:0 0 12px}.mut{color:var(--mut);font-size:14px}
-button{font:inherit;cursor:pointer}
-.btn{background:var(--pri);color:#fff;border:0;border-radius:14px;padding:13px 22px;font-weight:600;width:100%}
-.ghost{background:none;border:0;color:var(--mut);padding:8px 0}
-.bar{height:8px;background:var(--pri2);border-radius:8px;overflow:hidden;margin:6px 0 20px}
-.bar i{display:block;height:100%;background:var(--pri);transition:width .25s}
-.q{font-size:19px;font-weight:600;min-height:90px;margin:8px 0 16px}
-.opt{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:var(--bg);color:var(--ink);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:8px}
-.opt:active,.opt.on{border-color:var(--pri);background:var(--pri2)}
-.opt b{width:28px;height:28px;border-radius:50%;background:var(--pri);color:#fff;display:grid;place-items:center;flex:none;font-size:14px}
-.emoji{font-size:54px;text-align:center}
-.tag{display:inline-block;background:var(--pri2);color:var(--pri);border-radius:20px;padding:2px 12px;font-size:13px;font-weight:600;margin:0 6px 6px 0}
-.row{margin:10px 0}.row .l{display:flex;justify-content:space-between;font-size:14px}
-.chip{border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:10px 12px;margin:0 6px 8px 0;text-align:left}
-.chip.on{border-color:var(--pri);background:var(--pri2)}
-.hide{display:none}
+  :root {
+    --bg-primary: #fff9f5;
+    --bg-secondary: #fff0e6;
+    --card-bg: rgba(255, 255, 255, 0.86);
+    --card-border: rgba(255, 133, 99, 0.18);
+    --text-main: #2a2130;
+    --text-muted: #766b7d;
+    --accent: #ff6b42;
+    --accent-soft: #ffe8e0;
+  }
+
+  html.dark {
+    --bg-primary: #15111c;
+    --bg-secondary: #1e1829;
+    --card-bg: rgba(34, 28, 46, 0.85);
+    --card-border: rgba(255, 143, 112, 0.16);
+    --text-main: #f6f2fa;
+    --text-muted: #a99eb5;
+    --accent: #ff8563;
+    --accent-soft: rgba(255, 133, 99, 0.15);
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    font-family: 'Anuphan', system-ui, sans-serif;
+    line-height: 1.65;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  h1, h2, h3, .font-heading {
+    font-family: 'Prompt', 'Anuphan', sans-serif;
+  }
+
+  /* Decorative ambient blobs */
+  .blob {
+    position: fixed;
+    border-radius: 9999px;
+    filter: blur(70px);
+    opacity: 0.45;
+    z-index: -1;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    animation: floatSlow 14s ease-in-out infinite alternate;
+  }
+  html.dark .blob {
+    opacity: 0.22;
+  }
+  .blob-1 {
+    width: 340px;
+    height: 340px;
+    background: #ff9a76;
+    top: -100px;
+    right: -80px;
+  }
+  .blob-2 {
+    width: 300px;
+    height: 300px;
+    background: #ffd166;
+    bottom: -80px;
+    left: -90px;
+    animation-delay: -5s;
+  }
+  .blob-3 {
+    width: 260px;
+    height: 260px;
+    background: #c084fc;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.2;
+    animation-delay: -9s;
+  }
+
+  @keyframes floatSlow {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(20px, -25px) scale(1.08); }
+  }
+
+  /* Glass Card */
+  .glass-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 20px 45px -15px rgba(42, 33, 48, 0.08), 0 4px 12px -2px rgba(42, 33, 48, 0.04);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  html.dark .glass-card {
+    box-shadow: 0 24px 50px -15px rgba(0, 0, 0, 0.45);
+  }
+
+  /* Animations */
+  @keyframes fadeSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(14px) scale(0.99);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  .animate-view {
+    animation: fadeSlideUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes popBounce {
+    0% { transform: scale(0.8); opacity: 0; }
+    60% { transform: scale(1.08); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .animate-pop {
+    animation: popBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  /* Option button styling */
+  .opt-btn {
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .opt-btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+  }
+  .opt-btn:active {
+    transform: translateY(0) scale(0.985);
+  }
+  .opt-btn.selected {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    box-shadow: 0 6px 18px -6px rgba(255, 107, 66, 0.35);
+  }
+
+  /* Primary Gradient CTA */
+  .btn-primary {
+    background: linear-gradient(135deg, #ff7a59 0%, #ff5733 100%);
+    color: #ffffff;
+    box-shadow: 0 10px 25px -6px rgba(255, 95, 56, 0.48);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px -6px rgba(255, 95, 56, 0.6);
+    filter: brightness(1.03);
+  }
+  .btn-primary:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(160, 145, 175, 0.3);
+    border-radius: 9999px;
+  }
 </style>
 </head>
-<body>
-<div class="wrap">
-<div id="app"></div>
-</div>
+<body class="selection:bg-orange-200 selection:text-orange-900 dark:selection:bg-orange-900 dark:selection:text-orange-100">
+
+  <!-- Ambient Background Blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <!-- Confetti Canvas Overlay -->
+  <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-50 w-full h-full hidden"></canvas>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-4 transition-all duration-300">
+    <div class="bg-slate-900/95 dark:bg-white/95 text-white dark:text-slate-900 px-5 py-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-sm font-medium backdrop-blur-md">
+      <span id="toast-icon">✨</span>
+      <span id="toast-msg">คัดลอกผลลัพธ์เรียบร้อยแล้ว!</span>
+    </div>
+  </div>
+
+  <!-- Top Navigation / Header Bar -->
+  <header class="max-w-xl mx-auto px-4 pt-5 pb-2 flex items-center justify-between">
+    <div class="flex items-center gap-2.5 cursor-pointer group" id="brand-home" title="กลับหน้าแรก">
+      <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-orange-400 to-rose-500 flex items-center justify-center text-white shadow-md shadow-orange-500/20 group-hover:scale-105 transition-transform">
+        <span class="text-xl">🫶</span>
+      </div>
+      <div>
+        <span class="font-heading font-bold text-base tracking-tight block leading-none">FriendType</span>
+        <span class="text-xs opacity-60 block mt-0.5">แบบประเมินมิตรภาพ 6 มิติ</span>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <!-- Theme Toggle Button -->
+      <button id="theme-toggle" type="button" aria-label="สลับโหมดสี" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center hover:scale-105 active:scale-95 transition-transform text-lg">
+        <span id="theme-icon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-xl mx-auto px-4 pt-2 pb-16">
+    <div id="app"></div>
+  </main>
+
 <script>
-var T=[
-{k:"support",n:"เพื่อนสายซัพพอร์ต",s:"อยู่ข้างเธอ",e:"🤝",d:"คุณคือคนที่เพื่อนนึกถึงเป็นคนแรกเมื่อมีปัญหา พร้อมยื่นมือช่วยและอยู่ข้างเพื่อนแม้ในวันที่ยากที่สุด ทำให้เพื่อนรู้ว่าเขาไม่ต้องสู้เพียงลำพัง",tips:["พร้อมช่วยเหลือเสมอ","ให้กำลังใจในวันที่ล้ม","ไม่ปล่อยเพื่อนไว้คนเดียว"],g:"ระวังอย่าแบกปัญหาของเพื่อนจนลืมดูแลใจตัวเอง"},
-{k:"joy",n:"เพื่อนสายสร้างความสุข",s:"อยู่ด้วยแล้วมีความสุข",e:"😄",d:"คุณคือผู้สร้างรอยยิ้มและบรรยากาศดี ๆ ในกลุ่ม ชวนทำกิจกรรมสนุก ๆ และทำให้เพื่อนผ่อนคลายเมื่อเครียด เพื่อนสบายใจทุกครั้งที่อยู่กับคุณ",tips:["ทำให้หัวเราะได้","สร้างบรรยากาศสนุก","ช่วยให้เพื่อนผ่อนคลาย"],g:"บางครั้งเพื่อนอาจต้องการให้คุณจริงจังและรับฟังด้วย"},
-{k:"listen",n:"เพื่อนสายรับฟัง",s:"เล่าให้ฉันฟังได้",e:"👂",d:"คุณเป็นพื้นที่ปลอดภัยของเพื่อน ฟังจนจบโดยไม่รีบตัดสิน ใส่ใจความรู้สึกก่อนตอบ เพื่อนจึงกล้าเล่าเรื่องส่วนตัวให้คุณฟัง",tips:["ฟังด้วยใจ","ไม่ตัดสิน","เป็นที่ไว้ใจเรื่องส่วนตัว"],g:"ลองบอกความรู้สึกของตัวเองให้เพื่อนฟังบ้างเช่นกัน"},
-{k:"advisor",n:"เพื่อนสายที่ปรึกษา",s:"ฉันจะช่วยเธอคิด",e:"🧭",d:"คุณช่วยเพื่อนมองปัญหาหลายมุม จัดลำดับความคิด และคิดถึงผลที่จะตามมา กล้าพูดความจริงเมื่อมันเป็นประโยชน์กับเพื่อน",tips:["ช่วยคิดหาทางออก","มองหลายมุม","พูดความจริงด้วยความหวังดี"],g:"บางวันเพื่อนแค่อยากให้ฟัง ไม่ได้อยากได้คำแนะนำ"},
-{k:"push",n:"เพื่อนสายผลักดัน",s:"ฉันอยากเห็นเธอเติบโต",e:"🚀",d:"คุณคือกำลังใจที่ดันให้เพื่อนกล้าลองสิ่งใหม่ ลุกขึ้นสู้อีกครั้งเมื่อล้ม และดีใจจริง ๆ กับความสำเร็จของเพื่อน",tips:["ให้กำลังใจให้กล้าลอง","สนับสนุนให้ลองอีกครั้ง","ยินดีกับความสำเร็จเพื่อน"],g:"เคารพจังหวะชีวิตของเพื่อน บางครั้งเขาต้องการพักก่อน"},
-{k:"loyal",n:"เพื่อนสายจริงใจ",s:"ไม่ทิ้งกัน",e:"💛",d:"คุณซื่อสัตย์และไม่ทิ้งเพื่อน อยู่ข้างกันทั้งวันดีและวันแย่ กล้าขอโทษ ให้อภัย และเตือนด้วยความหวังดี มิตรภาพกับคุณจึงยืนยาว",tips:["ไม่ทิ้งกันทั้งวันดีและแย่","ขอโทษและให้อภัยได้","เตือนด้วยความหวังดี"],g:"อย่าลืมวางขอบเขตให้ตัวเองในมิตรภาพด้วย"}
+/**
+ * ข้อมูลประเภทเพื่อนทั้ง 6 สาย (รักษาข้อมูลและคำอธิบายต้นฉบับ 100% พร้อมเพิ่มสีประจำสาย)
+ */
+var T = [
+  {
+    k: "support",
+    n: "เพื่อนสายซัพพอร์ต",
+    s: "อยู่ข้างเธอ",
+    e: "🤝",
+    color: "#ff6b42",
+    bgLight: "#fff1ec",
+    bgDark: "rgba(255, 107, 66, 0.16)",
+    d: "คุณคือคนที่เพื่อนนึกถึงเป็นคนแรกเมื่อมีปัญหา พร้อมยื่นมือช่วยและอยู่ข้างเพื่อนแม้ในวันที่ยากที่สุด ทำให้เพื่อนรู้ว่าเขาไม่ต้องสู้เพียงลำพัง",
+    tips: ["พร้อมช่วยเหลือเสมอ", "ให้กำลังใจในวันที่ล้ม", "ไม่ปล่อยเพื่อนไว้คนเดียว"],
+    g: "ระวังอย่าแบกปัญหาของเพื่อนจนลืมดูแลใจตัวเอง"
+  },
+  {
+    k: "joy",
+    n: "เพื่อนสายสร้างความสุข",
+    s: "อยู่ด้วยแล้วมีความสุข",
+    e: "😄",
+    color: "#f59e0b",
+    bgLight: "#fef9e7",
+    bgDark: "rgba(245, 158, 11, 0.16)",
+    d: "คุณคือผู้สร้างรอยยิ้มและบรรยากาศดี ๆ ในกลุ่ม ชวนทำกิจกรรมสนุก ๆ และทำให้เพื่อนผ่อนคลายเมื่อเครียด เพื่อนสบายใจทุกครั้งที่อยู่กับคุณ",
+    tips: ["ทำให้หัวเราะได้", "สร้างบรรยากาศสนุก", "ช่วยให้เพื่อนผ่อนคลาย"],
+    g: "บางครั้งเพื่อนอาจต้องการให้คุณจริงจังและรับฟังด้วย"
+  },
+  {
+    k: "listen",
+    n: "เพื่อนสายรับฟัง",
+    s: "เล่าให้ฉันฟังได้",
+    e: "👂",
+    color: "#10b981",
+    bgLight: "#ecfdf5",
+    bgDark: "rgba(16, 185, 129, 0.16)",
+    d: "คุณเป็นพื้นที่ปลอดภัยของเพื่อน ฟังจนจบโดยไม่รีบตัดสิน ใส่ใจความรู้สึกก่อนตอบ เพื่อนจึงกล้าเล่าเรื่องส่วนตัวให้คุณฟัง",
+    tips: ["ฟังด้วยใจ", "ไม่ตัดสิน", "เป็นที่ไว้ใจเรื่องส่วนตัว"],
+    g: "ลองบอกความรู้สึกของตัวเองให้เพื่อนฟังบ้างเช่นกัน"
+  },
+  {
+    k: "advisor",
+    n: "เพื่อนสายที่ปรึกษา",
+    s: "ฉันจะช่วยเธอคิด",
+    e: "🧭",
+    color: "#3b82f6",
+    bgLight: "#eff6ff",
+    bgDark: "rgba(59, 130, 246, 0.16)",
+    d: "คุณช่วยเพื่อนมองปัญหาหลายมุม จัดลำดับความคิด และคิดถึงผลที่จะตามมา กล้าพูดความจริงเมื่อมันเป็นประโยชน์กับเพื่อน",
+    tips: ["ช่วยคิดหาทางออก", "มองหลายมุม", "พูดความจริงด้วยความหวังดี"],
+    g: "บางวันเพื่อนแค่อยากให้ฟัง ไม่ได้อยากได้คำแนะนำ"
+  },
+  {
+    k: "push",
+    n: "เพื่อนสายผลักดัน",
+    s: "ฉันอยากเห็นเธอเติบโต",
+    e: "🚀",
+    color: "#8b5cf6",
+    bgLight: "#f5f3ff",
+    bgDark: "rgba(139, 92, 246, 0.16)",
+    d: "คุณคือกำลังใจที่ดันให้เพื่อนกล้าลองสิ่งใหม่ ลุกขึ้นสู้อีกครั้งเมื่อล้ม และดีใจจริง ๆ กับความสำเร็จของเพื่อน",
+    tips: ["ให้กำลังใจให้กล้าลอง", "สนับสนุนให้ลองอีกครั้ง", "ยินดีกับความสำเร็จเพื่อน"],
+    g: "เคารพจังหวะชีวิตของเพื่อน บางครั้งเขาต้องการพักก่อน"
+  },
+  {
+    k: "loyal",
+    n: "เพื่อนสายจริงใจ",
+    s: "ไม่ทิ้งกัน",
+    e: "💛",
+    color: "#ec4899",
+    bgLight: "#fdf2f8",
+    bgDark: "rgba(236, 72, 153, 0.16)",
+    d: "คุณซื่อสัตย์และไม่ทิ้งเพื่อน อยู่ข้างกันทั้งวันดีและวันแย่ กล้าขอโทษ ให้อภัย และเตือนด้วยความหวังดี มิตรภาพกับคุณจึงยืนยาว",
+    tips: ["ไม่ทิ้งกันทั้งวันดีและแย่", "ขอโทษและให้อภัยได้", "เตือนด้วยความหวังดี"],
+    g: "อย่าลืมวางขอบเขตให้ตัวเองในมิตรภาพด้วย"
+  }
 ];
-var Q=[
-[0,"ฉันพร้อมช่วยเพื่อนเมื่อเขากำลังมีปัญหา"],[0,"เมื่อเพื่อนล้มเหลว ฉันพยายามให้กำลังใจเขา"],[0,"ฉันพร้อมอยู่ข้างเพื่อน แม้ในวันที่เขาเจอเรื่องยาก"],[0,"ถ้าเพื่อนต้องการความช่วยเหลือ ฉันพยายามช่วยเท่าที่ทำได้"],[0,"ฉันอยากให้เพื่อนรู้ว่าเขาไม่ต้องเผชิญปัญหาเพียงลำพัง"],
-[1,"ฉันมักทำให้เพื่อนหัวเราะหรือยิ้มได้"],[1,"ฉันชอบสร้างบรรยากาศที่สนุกเมื่ออยู่กับเพื่อน"],[1,"เมื่อเพื่อนเครียด ฉันพยายามทำให้เขาผ่อนคลาย"],[1,"ฉันชอบชวนเพื่อนทำกิจกรรมหรือสิ่งสนุก ๆ ด้วยกัน"],[1,"เพื่อนมักรู้สึกสบายใจเมื่ออยู่กับฉัน"],
-[2,"เมื่อเพื่อนมีเรื่องไม่สบายใจ ฉันพร้อมฟังเขา"],[2,"ฉันพยายามฟังเพื่อนให้จบก่อนที่จะพูดหรือให้คำแนะนำ"],[2,"ฉันไม่รีบตัดสินเพื่อนเมื่อเขาเล่าเรื่องส่วนตัวให้ฟัง"],[2,"เพื่อนสามารถพูดเรื่องส่วนตัวกับฉันได้"],[2,"ฉันพยายามเข้าใจความรู้สึกของเพื่อนก่อนตอบเขา"],
-[3,"เมื่อเพื่อนมีปัญหา ฉันช่วยเขาคิดหาทางออก"],[3,"ฉันสามารถมองปัญหาจากหลายมุมก่อนให้คำแนะนำ"],[3,"ฉันกล้าพูดความจริงกับเพื่อนเมื่อคิดว่าสิ่งนั้นจะช่วยเขา"],[3,"ฉันช่วยเพื่อนคิดถึงผลที่จะตามมาก่อนตัดสินใจ"],[3,"เมื่อเพื่อนสับสน ฉันพร้อมช่วยเขาจัดลำดับความคิด"],
-[4,"ฉันชอบให้กำลังใจเพื่อนเมื่อเขากำลังพยายามทำบางสิ่ง"],[4,"ฉันช่วยให้เพื่อนกล้าที่จะลองทำสิ่งใหม่ ๆ"],[4,"เมื่อเพื่อนล้มเหลว ฉันสนับสนุนให้เขาลองอีกครั้ง"],[4,"ฉันยินดีกับความสำเร็จและการเติบโตของเพื่อน"],[4,"ฉันอยากเห็นเพื่อนพัฒนาตัวเองให้ดีขึ้น"],
-[5,"ฉันยังเป็นเพื่อนกับคนอื่นแม้เขาจะไม่ได้ให้อะไรตอบแทนฉัน"],[5,"ฉันกล้าขอโทษเมื่อฉันทำผิดกับเพื่อน"],[5,"ฉันสามารถให้อภัยเพื่อนเมื่อเขาทำผิดกับฉัน"],[5,"ฉันกล้าเตือนเพื่อนด้วยความหวังดีเมื่อเขากำลังทำสิ่งที่ไม่ถูกต้อง"],[5,"ฉันพร้อมอยู่ข้างเพื่อนทั้งในวันที่ดีและวันที่แย่"]
+
+/**
+ * คำถามทั้ง 30 ข้อ (รักษาต้นฉบับ 100%)
+ */
+var Q = [
+  [0,"ฉันพร้อมช่วยเพื่อนเมื่อเขากำลังมีปัญหา"],
+  [0,"เมื่อเพื่อนล้มเหลว ฉันพยายามให้กำลังใจเขา"],
+  [0,"ฉันพร้อมอยู่ข้างเพื่อน แม้ในวันที่เขาเจอเรื่องยาก"],
+  [0,"ถ้าเพื่อนต้องการความช่วยเหลือ ฉันพยายามช่วยเท่าที่ทำได้"],
+  [0,"ฉันอยากให้เพื่อนรู้ว่าเขาไม่ต้องเผชิญปัญหาเพียงลำพัง"],
+  [1,"ฉันมักทำให้เพื่อนหัวเราะหรือยิ้มได้"],
+  [1,"ฉันชอบสร้างบรรยากาศที่สนุกเมื่ออยู่กับเพื่อน"],
+  [1,"เมื่อเพื่อนเครียด ฉันพยายามทำให้เขาผ่อนคลาย"],
+  [1,"ฉันชอบชวนเพื่อนทำกิจกรรมหรือสิ่งสนุก ๆ ด้วยกัน"],
+  [1,"เพื่อนมักรู้สึกสบายใจเมื่ออยู่กับฉัน"],
+  [2,"เมื่อเพื่อนมีเรื่องไม่สบายใจ ฉันพร้อมฟังเขา"],
+  [2,"ฉันพยายามฟังเพื่อนให้จบก่อนที่จะพูดหรือให้คำแนะนำ"],
+  [2,"ฉันไม่รีบตัดสินเพื่อนเมื่อเขาเล่าเรื่องส่วนตัวให้ฟัง"],
+  [2,"เพื่อนสามารถพูดเรื่องส่วนตัวกับฉันได้"],
+  [2,"ฉันพยายามเข้าใจความรู้สึกของเพื่อนก่อนตอบเขา"],
+  [3,"เมื่อเพื่อนมีปัญหา ฉันช่วยเขาคิดหาทางออก"],
+  [3,"ฉันสามารถมองปัญหาจากหลายมุมก่อนให้คำแนะนำ"],
+  [3,"ฉันกล้าพูดความจริงกับเพื่อนเมื่อคิดว่าสิ่งนั้นจะช่วยเขา"],
+  [3,"ฉันช่วยเพื่อนคิดถึงผลที่จะตามมาก่อนตัดสินใจ"],
+  [3,"เมื่อเพื่อนสับสน ฉันพร้อมช่วยเขาจัดลำดับความคิด"],
+  [4,"ฉันชอบให้กำลังใจเพื่อนเมื่อเขากำลังพยายามทำบางสิ่ง"],
+  [4,"ฉันช่วยให้เพื่อนกล้าที่จะลองทำสิ่งใหม่ ๆ"],
+  [4,"เมื่อเพื่อนล้มเหลว ฉันสนับสนุนให้เขาลองอีกครั้ง"],
+  [4,"ฉันยินดีกับความสำเร็จและการเติบโตของเพื่อน"],
+  [4,"ฉันอยากเห็นเพื่อนพัฒนาตัวเองให้ดีขึ้น"],
+  [5,"ฉันยังเป็นเพื่อนกับคนอื่นแม้เขาจะไม่ได้ให้อะไรตอบแทนฉัน"],
+  [5,"ฉันกล้าขอโทษเมื่อฉันทำผิดกับเพื่อน"],
+  [5,"ฉันสามารถให้อภัยเพื่อนเมื่อเขาทำผิดกับฉัน"],
+  [5,"ฉันกล้าเตือนเพื่อนด้วยความหวังดีเมื่อเขากำลังทำสิ่งที่ไม่ถูกต้อง"],
+  [5,"ฉันพร้อมอยู่ข้างเพื่อนทั้งในวันที่ดีและวันที่แย่"]
 ];
-var L=["ไม่ตรงกับฉันเลย","ไม่ค่อยตรง","ปานกลาง","ค่อนข้างตรง","ตรงกับฉันมากที่สุด"];
-var app=document.getElementById("app"),order,ans,i,want=-1;
 
-function shuffle(a){a=a.slice();for(var j=a.length-1;j>0;j--){var k=Math.floor(Math.random()*(j+1)),t=a[j];a[j]=a[k];a[k]=t}return a}
+/**
+ * ตัวเลือกระดับคะแนน 1 - 5 พร้อมอิโมจิประกอบเพื่อให้อ่านง่ายขึ้น
+ */
+var L = [
+  "ไม่ตรงกับฉันเลย",
+  "ไม่ค่อยตรง",
+  "ปานกลาง",
+  "ค่อนข้างตรง",
+  "ตรงกับฉันมากที่สุด"
+];
+var L_EMOJI = ["🌑", "🌘", "🌗", "🌖", "🌕"];
 
-function intro(){
- app.innerHTML='<div class="card"><div class="emoji">🫶</div><h1>ฉันเป็นเพื่อนแบบไหน?</h1><p>แบบประเมินสั้น ๆ 30 ข้อ ตอบตามความรู้สึกจริงของคุณ ไม่มีถูกหรือผิด แล้วระบบจะบอกว่าคุณเป็นเพื่อนประเภทไหน พร้อมอธิบายจุดเด่น</p><p class="mut">1 = ไม่ตรงกับฉันเลย … 5 = ตรงกับฉันมากที่สุด</p><button class="btn" id="go">เริ่มทำแบบประเมิน</button></div>';
- document.getElementById("go").onclick=function(){order=shuffle(Q.map(function(_,x){return x}));ans=[];i=0;want=-1;ask()}
+var app = document.getElementById("app");
+var order = [];
+var ans = [];
+var i = 0;
+var want = -1;
+var userName = "";
+var selectedCardTheme = 0;
+var currentScreen = "intro"; // "intro" | "ask" | "result"
+var isTransitioning = false;
+
+/**
+ * ธีมสีสำหรับการ์ดที่ระลึกดาวน์โหลด (4 สไตล์)
+ */
+var CARD_THEMES = [
+  {
+    name: "พีชอบอุ่น",
+    dot: "#ff7a59",
+    bgGrad: ["#fff7f2", "#ffe8dc", "#fff2eb"],
+    cardBg: "rgba(255, 255, 255, 0.90)",
+    textMain: "#2a2130",
+    textMuted: "#6e6275",
+    boxBg: "rgba(255, 255, 255, 0.78)",
+    isDark: false
+  },
+  {
+    name: "พาสเทลสกาย",
+    dot: "#38bdf8",
+    bgGrad: ["#f0f9ff", "#e0f2fe", "#f5f3ff"],
+    cardBg: "rgba(255, 255, 255, 0.90)",
+    textMain: "#1e293b",
+    textMuted: "#64748b",
+    boxBg: "rgba(255, 255, 255, 0.80)",
+    isDark: false
+  },
+  {
+    name: "มัทฉะครีม",
+    dot: "#10b981",
+    bgGrad: ["#f2fbf7", "#dcfce7", "#fef9c3"],
+    cardBg: "rgba(255, 255, 255, 0.90)",
+    textMain: "#1f2e27",
+    textMuted: "#576f63",
+    boxBg: "rgba(255, 255, 255, 0.80)",
+    isDark: false
+  },
+  {
+    name: "ไนท์กาแล็กซี",
+    dot: "#8b5cf6",
+    bgGrad: ["#171324", "#241b38", "#131829"],
+    cardBg: "rgba(38, 31, 56, 0.92)",
+    textMain: "#f8fafc",
+    textMuted: "#cbd5e1",
+    boxBg: "rgba(255, 255, 255, 0.07)",
+    isDark: true
+  }
+];
+
+/**
+ * ระบบจัดการ Dark / Light Theme
+ */
+function initTheme() {
+  var saved = localStorage.getItem("friend_quiz_theme");
+  var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  var isDark = saved ? saved === "dark" : prefersDark;
+  applyTheme(isDark);
+
+  document.getElementById("theme-toggle").onclick = function() {
+    var nowDark = !document.documentElement.classList.contains("dark");
+    applyTheme(nowDark);
+    localStorage.setItem("friend_quiz_theme", nowDark ? "dark" : "light");
+    if (currentScreen === "result") {
+      drawRadarChart(lastScores);
+    }
+  };
 }
 
-function ask(){
- var q=Q[order[i]],pct=Math.round(i/30*100),h='<div class="card"><div class="mut">ข้อ '+(i+1)+' / 30</div><div class="bar"><i style="width:'+pct+'%"></i></div><div class="q">'+q[1]+'</div>';
- for(var s=5;s>=1;s--)h+='<button class="opt'+(ans[i]===s?' on':'')+'" data-s="'+s+'"><b>'+s+'</b>'+L[s-1]+'</button>';
- h+='<button class="ghost'+(i?'':' hide')+'" id="bk">← ย้อนกลับ</button></div>';
- app.innerHTML=h;
- Array.prototype.forEach.call(app.querySelectorAll(".opt"),function(b){b.onclick=function(){ans[i]=+b.dataset.s;i++;i<30?ask():result()}});
- var bk=document.getElementById("bk");if(bk)bk.onclick=function(){i--;ask()}
+function applyTheme(isDark) {
+  if (isDark) {
+    document.documentElement.classList.add("dark");
+    document.getElementById("theme-icon").textContent = "☀️";
+  } else {
+    document.documentElement.classList.remove("dark");
+    document.getElementById("theme-icon").textContent = "🌙";
+  }
 }
 
-function result(){
- var sc=[0,0,0,0,0,0];
- order.forEach(function(qi,x){sc[Q[qi][0]]+=ans[x]});
- var mx=Math.max.apply(null,sc),tops=[];
- sc.forEach(function(v,x){if(v===mx)tops.push(x)});
- var h='<div class="card">';
- if(tops.length>1)h+='<p class="mut">คะแนนสูงสุดเท่ากัน '+tops.length+' ประเภท คุณเป็นเพื่อนแบบผสมผสาน!</p>';
- tops.forEach(function(x){var t=T[x];
-  h+='<div class="emoji">'+t.e+'</div><h1 style="text-align:center;margin-bottom:0">'+t.n+'</h1><p class="mut" style="text-align:center">“'+t.s+'”</p><p>'+t.d+'</p><div>'+t.tips.map(function(z){return '<span class="tag">'+z+'</span>'}).join("")+'</div><p class="mut">💡 '+t.g+'</p>';
- });
- h+='<h2 style="margin-top:20px">คะแนนของคุณ</h2>';
- T.map(function(t,x){return [t,sc[x]]}).sort(function(a,b){return b[1]-a[1]}).forEach(function(r){
-  h+='<div class="row"><div class="l"><span>'+r[0].e+' '+r[0].n+'</span><b>'+r[1]+'/25</b></div><div class="bar" style="margin:4px 0"><i style="width:'+r[1]/25*100+'%"></i></div></div>'});
- h+='<h2 style="margin-top:24px">เพื่อนที่ฉันตามหา</h2><p class="mut">เลือก 1 ประเภทที่คุณอยากมีเป็นเพื่อนมากที่สุด</p><div id="want">';
- T.forEach(function(t,x){h+='<button class="chip" data-x="'+x+'">'+t.e+' '+t.n.replace("เพื่อน","")+'</button>'});
- h+='</div><div id="wout"></div><p class="mut" style="margin-top:16px">ลองแชร์กับเพื่อนในกลุ่มคนละ 1 นาที ว่าคุณเป็นเพื่อนประเภทนี้หรือไม่ อย่างไร?</p><button class="btn" id="re">ทำอีกครั้ง</button></div>';
- app.innerHTML=h;window.scrollTo(0,0);
- var chips=app.querySelectorAll(".chip");
- Array.prototype.forEach.call(chips,function(c){c.onclick=function(){
-  Array.prototype.forEach.call(chips,function(o){o.classList.remove("on")});c.classList.add("on");
-  var t=T[+c.dataset.x];document.getElementById("wout").innerHTML='<p style="margin-top:8px"><b>'+t.e+' '+t.n+'</b> — “'+t.s+'”<br><span class="mut">'+t.d+'</span></p>'}});
- document.getElementById("re").onclick=intro;
+/**
+ * ฟังก์ชันสลับลำดับคำถามแบบสุ่ม (Fisher-Yates Shuffle)
+ */
+function shuffle(a) {
+  a = a.slice();
+  for (var j = a.length - 1; j > 0; j--) {
+    var k = Math.floor(Math.random() * (j + 1));
+    var t = a[j];
+    a[j] = a[k];
+    a[k] = t;
+  }
+  return a;
 }
+
+/**
+ * แสดง Toast แจ้งเตือนสั้น ๆ
+ */
+var toastTimer = null;
+function showToast(msg, icon) {
+  var toast = document.getElementById("toast");
+  document.getElementById("toast-msg").textContent = msg;
+  document.getElementById("toast-icon").textContent = icon || "✨";
+  toast.classList.remove("opacity-0", "translate-y-4");
+  toast.classList.add("opacity-100", "translate-y-0");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() {
+    toast.classList.remove("opacity-100", "translate-y-0");
+    toast.classList.add("opacity-0", "translate-y-4");
+  }, 2600);
+}
+
+/**
+ * หน้าแรก (Intro Screen)
+ */
+function intro() {
+  currentScreen = "intro";
+  var badgesHtml = T.map(function(t) {
+    return '<div class="flex items-center gap-2 px-3 py-2 rounded-xl border border-orange-500/15 bg-white/60 dark:bg-white/5 text-xs sm:text-sm font-medium">' +
+      '<span class="text-base">' + t.e + '</span>' +
+      '<span class="truncate">' + t.n.replace("เพื่อน", "") + '</span>' +
+    '</div>';
+  }).join("");
+
+  app.innerHTML =
+    '<div class="glass-card rounded-3xl p-6 sm:p-8 animate-view">' +
+      '<div class="text-center">' +
+        '<div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-tr from-orange-100 to-amber-50 dark:from-orange-950/60 dark:to-amber-900/30 border border-orange-300/30 shadow-inner mb-4 animate-pop">' +
+          '<span class="text-5xl">🫶</span>' +
+        '</div>' +
+        '<div class="inline-block px-3.5 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-orange-500/10 text-orange-600 dark:text-orange-300 mb-3">' +
+          'Friendship Personality Quiz' +
+        '</div>' +
+        '<h1 class="text-2xl sm:text-3xl font-bold tracking-tight mb-3">ฉันเป็นเพื่อนแบบไหน?</h1>' +
+        '<p class="text-sm sm:text-base opacity-80 max-w-md mx-auto mb-6">' +
+          'แบบประเมินสั้น ๆ 30 ข้อ ตอบตามความรู้สึกจริงของคุณ ไม่มีถูกหรือผิด แล้วระบบจะบอกว่าคุณเป็นเพื่อนประเภทไหน พร้อมอธิบายจุดเด่น' +
+        '</p>' +
+      '</div>' +
+
+      '<div class="mb-6">' +
+        '<div class="text-xs font-semibold uppercase tracking-wider opacity-60 mb-2.5 text-center">ค้นพบ 6 มิติความเป็นเพื่อนในตัวคุณ</div>' +
+        '<div class="grid grid-cols-2 sm:grid-cols-3 gap-2">' +
+          badgesHtml +
+        '</div>' +
+      '</div>' +
+
+      '<!-- ช่องกรอกชื่อเล่นสำหรับพิมพ์ลงบนการ์ดที่ระลึก -->' +
+      '<div class="mb-5">' +
+        '<label for="user-name-input" class="block text-xs sm:text-sm font-semibold mb-2 opacity-80">✨ ชื่อเล่นของคุณ <span class="font-normal opacity-65">(ไม่บังคับ — ใช้แสดงบนการ์ดภาพที่ระลึก)</span></label>' +
+        '<input type="text" id="user-name-input" maxlength="28" value="' + escapeHtml(userName) + '" placeholder="เช่น มิ้นท์, ปอนด์, แพรว..." ' +
+          'class="w-full px-4 py-3 rounded-2xl border border-orange-500/25 bg-white/80 dark:bg-slate-800/70 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all placeholder:opacity-45">' +
+      '</div>' +
+
+      '<div class="rounded-2xl p-4 bg-orange-500/5 dark:bg-white/5 border border-orange-500/10 mb-6 flex items-center justify-between text-xs sm:text-sm">' +
+        '<div class="flex items-center gap-2">' +
+          '<span class="w-6 h-6 rounded-full bg-orange-500 text-white font-bold inline-grid place-items-center text-xs">1</span>' +
+          '<span class="opacity-80">ไม่ตรงกับฉันเลย</span>' +
+        '</div>' +
+        '<span class="opacity-40">•••</span>' +
+        '<div class="flex items-center gap-2">' +
+          '<span class="w-6 h-6 rounded-full bg-orange-500 text-white font-bold inline-grid place-items-center text-xs">5</span>' +
+          '<span class="opacity-80">ตรงกับฉันมากที่สุด</span>' +
+        '</div>' +
+      '</div>' +
+
+      '<button class="btn-primary w-full py-4 px-6 rounded-2xl font-heading font-semibold text-base sm:text-lg flex items-center justify-center gap-2 cursor-pointer border-0" id="go">' +
+        '<span>เริ่มทำแบบประเมิน</span>' +
+        '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>' +
+      '</button>' +
+    '</div>';
+
+  var nameInput = document.getElementById("user-name-input");
+  if (nameInput) {
+    nameInput.oninput = function(e) {
+      userName = e.target.value.trim();
+    };
+    nameInput.onkeydown = function(e) {
+      if (e.key === "Enter") {
+        document.getElementById("go").click();
+      }
+    };
+  }
+
+  document.getElementById("go").onclick = function() {
+    if (nameInput) userName = nameInput.value.trim();
+    order = shuffle(Q.map(function(_, x) { return x; }));
+    ans = [];
+    i = 0;
+    want = -1;
+    ask();
+  };
+}
+
+function escapeHtml(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+/**
+ * หน้าคำถาม (Question Screen)
+ */
+function ask() {
+  currentScreen = "ask";
+  isTransitioning = false;
+  var q = Q[order[i]];
+  var pct = Math.round(((i + 1) / 30) * 100);
+
+  var optionsHtml = "";
+  for (var s = 5; s >= 1; s--) {
+    var isSelected = ans[i] === s;
+    optionsHtml +=
+      '<button type="button" class="opt-btn ' + (isSelected ? 'selected' : '') + ' w-full text-left rounded-2xl p-3.5 sm:p-4 mb-2.5 border border-slate-200/80 dark:border-slate-700/70 bg-white/70 dark:bg-slate-800/50 flex items-center justify-between gap-3 group" data-s="' + s + '">' +
+        '<div class="flex items-center gap-3.5">' +
+          '<span class="w-9 h-9 rounded-xl font-heading font-bold text-sm flex items-center justify-center transition-colors ' +
+            (isSelected ? 'bg-orange-500 text-white' : 'bg-orange-500/10 text-orange-600 dark:text-orange-300 group-hover:bg-orange-500 group-hover:text-white') + '">' +
+            s +
+          '</span>' +
+          '<span class="font-medium text-sm sm:text-base">' + L[s - 1] + '</span>' +
+        '</div>' +
+        '<span class="text-lg opacity-75 group-hover:scale-110 transition-transform">' + L_EMOJI[s - 1] + '</span>' +
+      '</button>';
+  }
+
+  var html =
+    '<div class="glass-card rounded-3xl p-6 sm:p-8 animate-view">' +
+      '<!-- Top Progress Header -->' +
+      '<div class="flex items-center justify-between text-xs sm:text-sm font-medium mb-2">' +
+        '<span class="px-3 py-1 rounded-full bg-orange-500/10 text-orange-600 dark:text-orange-300 font-semibold">ข้อ ' + (i + 1) + ' / 30</span>' +
+        '<span class="opacity-60">' + pct + '%</span>' +
+      '</div>' +
+
+      '<!-- Progress Bar -->' +
+      '<div class="h-2.5 w-full bg-orange-500/10 dark:bg-white/10 rounded-full overflow-hidden mb-6">' +
+        '<div class="h-full bg-gradient-to-r from-orange-400 to-rose-500 rounded-full transition-all duration-300 ease-out" style="width:' + pct + '%"></div>' +
+      '</div>' +
+
+      '<!-- Question Text -->' +
+      '<div class="min-h-[96px] flex items-center my-2 mb-6">' +
+        '<h2 class="text-lg sm:text-xl font-semibold leading-relaxed">' + q[1] + '</h2>' +
+      '</div>' +
+
+      '<!-- Rating Choices -->' +
+      '<div class="mb-4">' +
+        optionsHtml +
+      '</div>' +
+
+      '<!-- Footer Controls -->' +
+      '<div class="flex items-center justify-between pt-2 border-t border-slate-200/50 dark:border-slate-700/40">' +
+        '<button type="button" id="bk" class="' + (i ? 'inline-flex' : 'invisible') + ' items-center gap-1.5 text-sm font-medium opacity-70 hover:opacity-100 py-2 px-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-all">' +
+          '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>' +
+          '<span>ย้อนกลับ</span>' +
+        '</button>' +
+        '<span class="text-xs opacity-45 hidden sm:inline">กดปุ่มตัวเลข 1-5 บนคีย์บอร์ดได้</span>' +
+      '</div>' +
+    '</div>';
+
+  app.innerHTML = html;
+
+  var buttons = app.querySelectorAll(".opt-btn");
+  Array.prototype.forEach.call(buttons, function(b) {
+    b.onclick = function() {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      var score = +b.dataset.s;
+      ans[i] = score;
+      b.classList.add("selected");
+
+      setTimeout(function() {
+        i++;
+        if (i < 30) {
+          ask();
+        } else {
+          result();
+        }
+      }, 140);
+    };
+  });
+
+  var bk = document.getElementById("bk");
+  if (bk) {
+    bk.onclick = function() {
+      if (i > 0 && !isTransitioning) {
+        i--;
+        ask();
+      }
+    };
+  }
+}
+
+// รองรับการกดปุ่ม 1-5 บนคีย์บอร์ดขณะทำแบบประเมิน
+window.addEventListener("keydown", function(e) {
+  if (currentScreen !== "ask" || isTransitioning) return;
+  if (e.key >= "1" && e.key <= "5") {
+    var targetBtn = app.querySelector('.opt-btn[data-s="' + e.key + '"]');
+    if (targetBtn) targetBtn.click();
+  } else if (e.key === "ArrowLeft" && i > 0) {
+    i--;
+    ask();
+  }
+});
+
+var lastScores = [0, 0, 0, 0, 0, 0];
+var lastTops = [];
+var autoDownloadOnCustomize = false;
+
+/**
+ * ฟังก์ชันสั่งดาวน์โหลดไฟล์ภาพ PNG จาก Canvas การ์ดที่ระลึก
+ */
+function triggerSouvenirDownload(isAuto) {
+  renderSouvenirCard();
+  var canvas = document.getElementById("souvenir-canvas");
+  if (!canvas || !lastTops.length) return;
+  var primaryType = T[lastTops[0]];
+  var cleanName = userName ? userName.replace(/[^a-zA-Z0-9ก-๙_-]/g, "") : "";
+  var filename = "friendship-card-" + (cleanName ? cleanName + "-" : "") + primaryType.k + ".png";
+
+  try {
+    var dataUrl = canvas.toDataURL("image/png");
+    var link = document.createElement("a");
+    link.download = filename;
+    link.href = dataUrl;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    var statusText = document.getElementById("auto-dl-status-text");
+    if (statusText) {
+      statusText.textContent = isAuto
+        ? "ระบบดาวน์โหลดการ์ดที่ระลึก (" + filename + ") ลงในเครื่องของคุณอัตโนมัติแล้ว!"
+        : "ดาวน์โหลดการ์ดที่ระลึกฉบับอัปเดต (" + filename + ") เรียบร้อยแล้ว!";
+    }
+
+    if (isAuto) {
+      showToast("📥 ดาวน์โหลดการ์ดที่ระลึกให้คุณอัตโนมัติแล้ว!", "🎉");
+    } else {
+      showToast("บันทึกภาพการ์ดที่ระลึกเรียบร้อยแล้ว!", "📸");
+    }
+  } catch (err) {
+    showToast("หากเบราว์เซอร์บล็อกดาวน์โหลดอัตโนมัติ กรุณากดปุ่มบันทึกภาพด้านล่าง", "⚠️");
+  }
+}
+
+/**
+ * หน้าผลลัพธ์ (Result Screen)
+ */
+function result() {
+  currentScreen = "result";
+  var sc = [0, 0, 0, 0, 0, 0];
+  order.forEach(function(qi, x) {
+    sc[Q[qi][0]] += ans[x];
+  });
+  lastScores = sc;
+
+  var mx = Math.max.apply(null, sc);
+  var tops = [];
+  sc.forEach(function(v, x) {
+    if (v === mx) tops.push(x);
+  });
+  lastTops = tops;
+
+  var h = '<div class="space-y-6 animate-view">';
+
+  // แถบแจ้งเตือนการดาวน์โหลดการ์ดที่ระลึกอัตโนมัติ
+  h +=
+    '<div class="glass-card rounded-2xl p-4 border-2 border-emerald-500/35 bg-emerald-500/10 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm">' +
+      '<div class="flex items-center gap-3 text-center sm:text-left">' +
+        '<span class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-xl shrink-0 shadow-md shadow-emerald-500/25">📥</span>' +
+        '<div>' +
+          '<div class="text-sm font-bold text-emerald-800 dark:text-emerald-200">ระบบดาวน์โหลดการ์ดที่ระลึกให้คุณอัตโนมัติแล้ว!</div>' +
+          '<div id="auto-dl-status-text" class="text-xs opacity-80">กำลังสร้างและบันทึกภาพการ์ด PNG (1080×1440 px) ลงในอุปกรณ์ของคุณ...</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="flex items-center gap-2 shrink-0">' +
+        '<button type="button" id="quick-redownload-btn" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition-all shadow-sm cursor-pointer border-0">ดาวน์โหลดซ้ำ</button>' +
+        '<a href="#souvenir-section" class="px-3 py-2 rounded-xl bg-white/70 dark:bg-white/10 hover:bg-white text-xs font-semibold transition-all">ดูการ์ด ↓</a>' +
+      '</div>' +
+    '</div>';
+
+  // กรณีได้คะแนนสูงสุดเท่ากันหลายประเภท
+  if (tops.length > 1) {
+    h += '<div class="glass-card rounded-2xl p-4 text-center border-amber-400/40 bg-amber-500/10">' +
+           '<span class="text-sm font-semibold text-amber-700 dark:text-amber-300">✨ คะแนนสูงสุดเท่ากัน ' + tops.length + ' ประเภท คุณเป็นเพื่อนแบบผสมผสาน!</span>' +
+         '</div>';
+  }
+
+  // การ์ดแสดงผลลัพธ์หลัก (Persona Cards)
+  tops.forEach(function(x) {
+    var t = T[x];
+    var tagsHtml = t.tips.map(function(z) {
+      return '<span class="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold" style="background:' + t.color + '1a; color:' + t.color + '">' +
+               '✓ ' + z +
+             '</span>';
+    }).join("");
+
+    h +=
+      '<div class="glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden">' +
+        '<div class="absolute -top-12 -right-12 w-36 h-36 rounded-full opacity-15 pointer-events-none" style="background:' + t.color + '"></div>' +
+
+        '<div class="text-center">' +
+          '<div class="inline-flex items-center justify-center w-24 h-24 rounded-3xl mb-4 shadow-sm animate-pop" style="background:' + t.color + '18; border: 1.5px solid ' + t.color + '40">' +
+            '<span class="text-6xl">' + t.e + '</span>' +
+          '</div>' +
+          '<div class="text-xs font-bold uppercase tracking-widest opacity-60 mb-1">ผลลัพธ์ของคุณคือ</div>' +
+          '<h1 class="text-2xl sm:text-3xl font-bold mb-1" style="color:' + t.color + '">' + t.n + '</h1>' +
+          '<p class="text-base sm:text-lg font-medium opacity-75 mb-4">“' + t.s + '”</p>' +
+        '</div>' +
+
+        '<p class="text-sm sm:text-base leading-relaxed mb-5 text-center sm:text-left">' + t.d + '</p>' +
+
+        '<div class="mb-5">' +
+          '<div class="text-xs font-semibold uppercase tracking-wider opacity-60 mb-2">จุดเด่นของคุณ</div>' +
+          '<div class="flex flex-wrap gap-2">' + tagsHtml + '</div>' +
+        '</div>' +
+
+        '<div class="rounded-2xl p-4 bg-amber-500/10 border border-amber-500/20 flex items-start gap-3">' +
+          '<span class="text-xl leading-none mt-0.5">💡</span>' +
+          '<div class="text-xs sm:text-sm">' +
+            '<strong class="block font-semibold mb-0.5">ข้อควรระวัง & การดูแลใจตัวเอง</strong>' +
+            '<span class="opacity-85">' + t.g + '</span>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  });
+
+  // กราฟเรดาร์ + แถบคะแนนทั้ง 6 มิติ
+  var sortedScores = T.map(function(t, x) { return [t, sc[x]]; }).sort(function(a, b) { return b[1] - a[1]; });
+  var barsHtml = sortedScores.map(function(r) {
+    var t = r[0];
+    var score = r[1];
+    var pct = Math.round((score / 25) * 100);
+    return (
+      '<div class="mb-3.5 last:mb-0">' +
+        '<div class="flex justify-between items-center text-sm mb-1.5">' +
+          '<span class="font-medium flex items-center gap-2">' +
+            '<span class="text-base">' + t.e + '</span>' +
+            '<span>' + t.n + '</span>' +
+          '</span>' +
+          '<b class="font-heading text-sm px-2.5 py-0.5 rounded-lg bg-black/5 dark:bg-white/10">' + score + ' / 25</b>' +
+        '</div>' +
+        '<div class="h-2.5 w-full bg-slate-200/70 dark:bg-slate-700/60 rounded-full overflow-hidden">' +
+          '<div class="h-full rounded-full transition-all duration-700 ease-out" style="width:' + pct + '%; background:' + t.color + '"></div>' +
+        '</div>' +
+      '</div>'
+    );
+  }).join("");
+
+  h +=
+    '<div class="glass-card rounded-3xl p-6 sm:p-8">' +
+      '<h2 class="text-xl font-bold mb-1">คะแนนของคุณทั้ง 6 มิติ</h2>' +
+      '<p class="text-xs sm:text-sm opacity-65 mb-4">แผนภูมิแสดงสัดส่วนความเป็นเพื่อนแต่ละสายในตัวคุณ</p>' +
+
+      '<!-- Radar Chart Canvas -->' +
+      '<div class="w-full max-w-[300px] mx-auto my-2 flex justify-center">' +
+        '<canvas id="radar-chart" width="300" height="280" class="w-full h-auto"></canvas>' +
+      '</div>' +
+
+      '<div class="mt-6 pt-5 border-t border-slate-200/60 dark:border-slate-700/50">' +
+        barsHtml +
+      '</div>' +
+    '</div>';
+
+  // ส่วนเลือก "เพื่อนที่ฉันตามหา"
+  var chipsHtml = T.map(function(t, x) {
+    return (
+      '<button type="button" class="chip-btn text-left p-3.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/70 bg-white/60 dark:bg-slate-800/40 hover:border-orange-400 transition-all flex items-center gap-2.5 group" data-x="' + x + '">' +
+        '<span class="text-2xl group-hover:scale-110 transition-transform">' + t.e + '</span>' +
+        '<span class="font-medium text-xs sm:text-sm leading-tight">' + t.n.replace("เพื่อน", "") + '</span>' +
+      '</button>'
+    );
+  }).join("");
+
+  h +=
+    '<div class="glass-card rounded-3xl p-6 sm:p-8">' +
+      '<h2 class="text-xl font-bold mb-1">เพื่อนที่ฉันตามหา 🔎</h2>' +
+      '<p class="text-xs sm:text-sm opacity-70 mb-4">เลือก 1 ประเภทที่คุณอยากมีเป็นเพื่อนมากที่สุดในตอนนี้</p>' +
+      '<div id="want" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">' +
+        chipsHtml +
+      '</div>' +
+      '<div id="wout" class="mt-4"></div>' +
+
+      '<div class="mt-6 p-4 rounded-2xl bg-orange-500/5 dark:bg-white/5 border border-orange-500/15 text-xs sm:text-sm opacity-85 flex items-center gap-3">' +
+        '<span class="text-2xl">💬</span>' +
+        '<span>ลองแชร์กับเพื่อนในกลุ่มคนละ 1 นาที ว่าคุณเป็นเพื่อนประเภทนี้หรือไม่ อย่างไร?</span>' +
+      '</div>' +
+    '</div>';
+
+  // ส่วนการ์ดที่ระลึกสำหรับดาวน์โหลดเก็บไว้ (Souvenir Image Card Studio)
+  var themeButtonsHtml = CARD_THEMES.map(function(th, idx) {
+    var activeClass = idx === selectedCardTheme ? "ring-2 ring-orange-500 bg-orange-500/10 font-semibold" : "opacity-80 hover:opacity-100";
+    return (
+      '<button type="button" class="card-theme-btn ' + activeClass + ' flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-200/80 dark:border-slate-700/70 bg-white/70 dark:bg-slate-800/50 text-xs transition-all" data-theme-idx="' + idx + '">' +
+        '<span class="w-3.5 h-3.5 rounded-full inline-block shrink-0" style="background:' + th.dot + '"></span>' +
+        '<span class="truncate">' + th.name + '</span>' +
+      '</button>'
+    );
+  }).join("");
+
+  h +=
+    '<div class="glass-card rounded-3xl p-6 sm:p-8 border-2 border-orange-400/30" id="souvenir-section">' +
+      '<div class="flex items-center justify-between flex-wrap gap-2 mb-2">' +
+        '<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-orange-500/15 text-orange-600 dark:text-orange-300">' +
+          '<span>📸</span><span>การ์ดที่ระลึกมิตรภาพ</span>' +
+        '</div>' +
+        '<span class="text-xs opacity-60">ขนาดคมชัดพิเศษ 1080 × 1440 px</span>' +
+      '</div>' +
+      '<h2 class="text-xl sm:text-2xl font-bold mb-1">เก็บภาพความทรงจำว่าคุณเป็นเพื่อนสายไหน</h2>' +
+      '<p class="text-xs sm:text-sm opacity-75 mb-5">ปรับแต่งชื่อและโทนสีการ์ด แล้วดาวน์โหลดเก็บไว้ในเครื่องหรือแชร์ลงสตอรี่ได้เลย</p>' +
+
+      '<!-- ปรับแต่งชื่อ & ธีมสีการ์ด -->' +
+      '<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">' +
+        '<div>' +
+          '<label for="result-name-input" class="block text-xs font-semibold uppercase tracking-wider opacity-65 mb-1.5">ชื่อบนการ์ดที่ระลึก</label>' +
+          '<input type="text" id="result-name-input" maxlength="28" value="' + escapeHtml(userName) + '" placeholder="พิมพ์ชื่อเล่นของคุณ..." ' +
+            'class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300/80 dark:border-slate-600/80 bg-white/80 dark:bg-slate-800/70 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500">' +
+        '</div>' +
+        '<div>' +
+          '<label class="block text-xs font-semibold uppercase tracking-wider opacity-65 mb-1.5">โทนสีการ์ด</label>' +
+          '<div class="grid grid-cols-2 gap-2" id="card-theme-picker">' +
+            themeButtonsHtml +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<!-- Live Canvas Preview -->' +
+      '<div class="relative rounded-2xl p-3 sm:p-4 bg-black/5 dark:bg-white/5 border border-slate-200/60 dark:border-slate-700/50 mb-4 flex flex-col items-center">' +
+        '<canvas id="souvenir-canvas" width="1080" height="1440" class="w-full max-w-[380px] h-auto rounded-2xl shadow-xl border border-black/5 dark:border-white/10"></canvas>' +
+        '<span class="text-[11px] opacity-55 mt-2.5 text-center">💡 หากแก้ไขชื่อ เปลี่ยนสีการ์ด หรือเลือก “เพื่อนที่ฉันตามหา” สามารถกดปุ่มด้านล่างเพื่อดาวน์โหลดการ์ดฉบับอัปเดตได้ทันที</span>' +
+      '</div>' +
+
+      '<!-- ตัวเลือกดาวน์โหลดอัตโนมัติเมื่อปรับแต่งการ์ด -->' +
+      '<label class="flex items-center justify-center gap-2 text-xs opacity-80 mb-4 cursor-pointer select-none">' +
+        '<input type="checkbox" id="auto-redownload-toggle" class="rounded accent-orange-500 w-4 h-4" ' + (autoDownloadOnCustomize ? 'checked' : '') + '>' +
+        '<span>ดาวน์โหลดใหม่อัตโนมัติเมื่อเปลี่ยนโทนสีการ์ดหรือเลือกเพื่อนที่ตามหา</span>' +
+      '</label>' +
+
+      '<!-- Download & Share Image Buttons -->' +
+      '<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">' +
+        '<button type="button" id="download-img-btn" class="btn-primary w-full py-4 px-5 rounded-2xl font-heading font-semibold text-sm sm:text-base flex items-center justify-center gap-2 border-0 cursor-pointer">' +
+          '<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>' +
+          '<span>ดาวน์โหลดซ้ำ / อัปเดตการ์ด (PNG)</span>' +
+        '</button>' +
+        '<button type="button" id="share-img-btn" class="w-full py-4 px-5 rounded-2xl font-heading font-semibold text-sm sm:text-base border-2 border-orange-500/35 text-orange-600 dark:text-orange-300 hover:bg-orange-500/10 transition-all flex items-center justify-center gap-2 cursor-pointer">' +
+          '<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>' +
+          '<span>แชร์รูปภาพ / คัดลอกข้อความ</span>' +
+        '</button>' +
+      '</div>' +
+
+      '<div class="mt-4 pt-4 border-t border-slate-200/50 dark:border-slate-700/40 flex justify-center">' +
+        '<button type="button" id="re" class="inline-flex items-center gap-2 text-sm font-semibold opacity-75 hover:opacity-100 py-2 px-4 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-all">' +
+          '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>' +
+          '<span>ทำแบบประเมินใหม่อีกครั้ง</span>' +
+        '</button>' +
+      '</div>' +
+    '</div>';
+
+  h += '</div>';
+  app.innerHTML = h;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // วาดกราฟเรดาร์ การ์ดที่ระลึก จุดพลุฉลอง และสั่งดาวน์โหลดการ์ด PNG อัตโนมัติทันทีเมื่อฟอนต์พร้อม
+  setTimeout(function() {
+    drawRadarChart(sc);
+    renderSouvenirCard();
+    launchConfetti();
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function() {
+        triggerSouvenirDownload(true);
+      });
+    } else {
+      triggerSouvenirDownload(true);
+    }
+  }, 120);
+
+  // ปุ่มดาวน์โหลดซ้ำด่วนจากแบนเนอร์ด้านบน
+  var quickDlBtn = document.getElementById("quick-redownload-btn");
+  if (quickDlBtn) {
+    quickDlBtn.onclick = function() {
+      triggerSouvenirDownload(false);
+    };
+  }
+
+  // สวิตช์เปิด-ปิดการดาวน์โหลดใหม่อัตโนมัติเมื่อปรับแต่งการ์ด
+  var autoToggle = document.getElementById("auto-redownload-toggle");
+  if (autoToggle) {
+    autoToggle.onchange = function(e) {
+      autoDownloadOnCustomize = e.target.checked;
+    };
+  }
+
+  // จัดการคลิกเลือก "เพื่อนที่ฉันตามหา"
+  var chips = app.querySelectorAll(".chip-btn");
+  Array.prototype.forEach.call(chips, function(c) {
+    c.onclick = function() {
+      Array.prototype.forEach.call(chips, function(o) {
+        o.classList.remove("ring-2", "ring-orange-500", "bg-orange-500/10");
+      });
+      c.classList.add("ring-2", "ring-orange-500", "bg-orange-500/10");
+      want = +c.dataset.x;
+      var t = T[want];
+      document.getElementById("wout").innerHTML =
+        '<div class="p-4 rounded-2xl border animate-view" style="background:' + t.color + '12; border-color:' + t.color + '40">' +
+          '<div class="font-bold text-base mb-1" style="color:' + t.color + '">' +
+            t.e + ' ' + t.n + ' — “' + t.s + '”' +
+          '</div>' +
+          '<p class="text-xs sm:text-sm opacity-85 mb-0">' + t.d + '</p>' +
+        '</div>';
+      // อัปเดตการ์ดที่ระลึกทันทีเมื่อเลือกเพื่อนที่ตามหา
+      renderSouvenirCard();
+      if (autoDownloadOnCustomize) {
+        triggerSouvenirDownload(false);
+      }
+    };
+  });
+
+  // อัปเดตชื่อบนการ์ดแบบสด (Live update)
+  var resNameInput = document.getElementById("result-name-input");
+  if (resNameInput) {
+    resNameInput.oninput = function(e) {
+      userName = e.target.value.trim();
+      renderSouvenirCard();
+    };
+  }
+
+  // สลับโทนสีการ์ดที่ระลึก
+  var themeBtns = app.querySelectorAll(".card-theme-btn");
+  Array.prototype.forEach.call(themeBtns, function(btn) {
+    btn.onclick = function() {
+      selectedCardTheme = +btn.dataset.themeIdx;
+      Array.prototype.forEach.call(themeBtns, function(b) {
+        b.classList.remove("ring-2", "ring-orange-500", "bg-orange-500/10", "font-semibold");
+        b.classList.add("opacity-80");
+      });
+      btn.classList.remove("opacity-80");
+      btn.classList.add("ring-2", "ring-orange-500", "bg-orange-500/10", "font-semibold");
+      renderSouvenirCard();
+      if (autoDownloadOnCustomize) {
+        triggerSouvenirDownload(false);
+      }
+    };
+  });
+
+  // ปุ่มดาวน์โหลดการ์ดเป็นไฟล์ PNG (ดาวน์โหลดซ้ำ/อัปเดตการ์ด)
+  document.getElementById("download-img-btn").onclick = function() {
+    triggerSouvenirDownload(false);
+  };
+
+  // ปุ่มแชร์รูปภาพ (ผ่าน Web Share API หากอุปกรณ์รองรับ หรือคัดลอกข้อความสรุป)
+  document.getElementById("share-img-btn").onclick = function() {
+    renderSouvenirCard();
+    var canvas = document.getElementById("souvenir-canvas");
+    var topNames = tops.map(function(idx) { return T[idx].e + " " + T[idx].n + " (“" + T[idx].s + "”)"; }).join(" และ ");
+    var wantedText = want >= 0 ? ("\n🔎 เพื่อนที่กำลังตามหา: " + T[want].e + " " + T[want].n) : "";
+    var summary =
+      "🫶 ผลแบบประเมิน “ฉันเป็นเพื่อนแบบไหน?”\n" +
+      (userName ? "ชื่อ: " + userName + "\n" : "") +
+      "ฉันคือ: " + topNames + "\n\n" +
+      "📊 คะแนนทั้ง 6 มิติ:\n" +
+      T.map(function(t, idx) { return t.e + " " + t.n + ": " + sc[idx] + "/25"; }).join("\n") +
+      wantedText;
+
+    if (canvas && navigator.canShare && navigator.share) {
+      canvas.toBlob(function(blob) {
+        if (!blob) {
+          copyToClipboard(summary);
+          showToast("คัดลอกผลลัพธ์ไปยังคลิปบอร์ดแล้ว!", "📋");
+          return;
+        }
+        var file = new File([blob], "my-friend-type.png", { type: "image/png" });
+        if (navigator.canShare({ files: [file] })) {
+          navigator.share({
+            title: "ฉันเป็นเพื่อนแบบไหน?",
+            text: summary,
+            files: [file]
+          }).catch(function() {});
+        } else {
+          copyToClipboard(summary);
+          showToast("คัดลอกผลลัพธ์ไปยังคลิปบอร์ดแล้ว!", "📋");
+        }
+      }, "image/png");
+    } else {
+      copyToClipboard(summary);
+      showToast("คัดลอกข้อความสรุปไปยังคลิปบอร์ดแล้ว!", "📋");
+    }
+  };
+
+  // ปุ่มทำอีกครั้ง
+  document.getElementById("re").onclick = intro;
+}
+
+/**
+ * ฟังก์ชันวาดกรอบสี่เหลี่ยมมุมมนบน Canvas
+ */
+function roundRectPath(ctx, x, y, w, h, r) {
+  var radius = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.arcTo(x + w, y, x + w, y + h, radius);
+  ctx.arcTo(x + w, y + h, x, y + h, radius);
+  ctx.arcTo(x, y + h, x, y, radius);
+  ctx.arcTo(x, y, x + w, y, radius);
+  ctx.closePath();
+}
+
+/**
+ * ฟังก์ชันตัดบรรทัดข้อความภาษาไทยและอังกฤษอัตโนมัติบน Canvas
+ */
+function wrapThaiText(ctx, text, maxWidth) {
+  var words = [];
+  if (typeof Intl !== "undefined" && Intl.Segmenter) {
+    var segmenter = new Intl.Segmenter("th", { granularity: "word" });
+    var segments = segmenter.segment(text);
+    for (var seg of segments) {
+      words.push(seg.segment);
+    }
+  } else {
+    words = text.split("");
+  }
+
+  var lines = [];
+  var currentLine = "";
+  for (var n = 0; n < words.length; n++) {
+    var testLine = currentLine + words[n];
+    var metrics = ctx.measureText(testLine);
+    if (metrics.width > maxWidth && currentLine !== "") {
+      lines.push(currentLine.trim());
+      currentLine = words[n].trimStart();
+    } else {
+      currentLine = testLine;
+    }
+  }
+  if (currentLine.trim() !== "") {
+    lines.push(currentLine.trim());
+  }
+  return lines;
+}
+
+/**
+ * วาดการ์ดที่ระลึกความละเอียดสูง (1080 x 1440 px) บน HTML5 Canvas
+ */
+function renderSouvenirCard() {
+  var canvas = document.getElementById("souvenir-canvas");
+  if (!canvas || !lastTops.length) return;
+  var ctx = canvas.getContext("2d");
+  var W = 1080;
+  var H = 1440;
+  canvas.width = W;
+  canvas.height = H;
+
+  var theme = CARD_THEMES[selectedCardTheme] || CARD_THEMES[0];
+  var primaryIdx = lastTops[0];
+  var t = T[primaryIdx];
+  var isMulti = lastTops.length > 1;
+
+  // 1. วาดพื้นหลังไล่สีตามธีมที่เลือก
+  var bgGrad = ctx.createLinearGradient(0, 0, W, H);
+  bgGrad.addColorStop(0, theme.bgGrad[0]);
+  bgGrad.addColorStop(0.5, theme.bgGrad[1]);
+  bgGrad.addColorStop(1, theme.bgGrad[2]);
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. วาดวงกลมแสงฟุ้งตกแต่งมุมภาพ
+  ctx.save();
+  var glow1 = ctx.createRadialGradient(W - 120, 140, 20, W - 120, 140, 380);
+  glow1.addColorStop(0, t.color + "38");
+  glow1.addColorStop(1, t.color + "00");
+  ctx.fillStyle = glow1;
+  ctx.fillRect(0, 0, W, H);
+
+  var glow2 = ctx.createRadialGradient(140, H - 180, 20, 140, H - 180, 360);
+  glow2.addColorStop(0, theme.dot + "30");
+  glow2.addColorStop(1, theme.dot + "00");
+  ctx.fillStyle = glow2;
+  ctx.fillRect(0, 0, W, H);
+  ctx.restore();
+
+  // 3. วาดการ์ดหลักตรงกลาง
+  var cardX = 64;
+  var cardY = 64;
+  var cardW = W - 128;
+  var cardH = H - 128;
+
+  ctx.save();
+  ctx.shadowColor = "rgba(20, 15, 30, 0.14)";
+  ctx.shadowBlur = 45;
+  ctx.shadowOffsetY = 18;
+  roundRectPath(ctx, cardX, cardY, cardW, cardH, 52);
+  ctx.fillStyle = theme.cardBg;
+  ctx.fill();
+  ctx.restore();
+
+  // เส้นขอบการ์ดบาง ๆ
+  roundRectPath(ctx, cardX, cardY, cardW, cardH, 52);
+  ctx.strokeStyle = t.color + "45";
+  ctx.lineWidth = 3;
+  ctx.stroke();
+
+  // แถบสีด้านบนของการ์ด
+  ctx.save();
+  roundRectPath(ctx, cardX, cardY, cardW, 22, 52);
+  ctx.clip();
+  ctx.fillStyle = t.color;
+  ctx.fillRect(cardX, cardY, cardW, 22);
+  ctx.restore();
+
+  // 4. ส่วนหัวการ์ด: ป้ายชื่อผู้ใช้ & ชื่อแบบประเมิน
+  var curY = cardY + 72;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  var headerLabel = userName
+    ? "✨ การ์ดมิตรภาพของ " + userName + " ✨"
+    : "✨ การ์ดที่ระลึก • ฉันเป็นเพื่อนแบบไหน? ✨";
+
+  ctx.font = "600 26px 'Prompt', 'Anuphan', sans-serif";
+  var badgeW = Math.min(ctx.measureText(headerLabel).width + 64, cardW - 100);
+  roundRectPath(ctx, W / 2 - badgeW / 2, curY - 26, badgeW, 52, 26);
+  ctx.fillStyle = t.color + "1c";
+  ctx.fill();
+
+  ctx.fillStyle = t.color;
+  ctx.fillText(headerLabel, W / 2, curY);
+
+  // 5. วงกลมไอคอนอิโมจิขนาดใหญ่
+  curY += 118;
+  ctx.beginPath();
+  ctx.arc(W / 2, curY, 76, 0, Math.PI * 2);
+  ctx.fillStyle = t.color + "18";
+  ctx.fill();
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = t.color + "45";
+  ctx.stroke();
+
+  ctx.font = "86px sans-serif";
+  ctx.fillText(t.e, W / 2, curY + 6);
+
+  // 6. ชื่อประเภทเพื่อน + สโลแกน
+  curY += 115;
+  ctx.font = "700 54px 'Prompt', 'Anuphan', sans-serif";
+  ctx.fillStyle = t.color;
+  ctx.fillText(t.n, W / 2, curY);
+
+  curY += 50;
+  ctx.font = "600 30px 'Anuphan', sans-serif";
+  ctx.fillStyle = theme.textMuted;
+  var sloganText = "“" + t.s + "”";
+  if (isMulti) {
+    var otherNames = lastTops.slice(1).map(function(idx) { return T[idx].e + " " + T[idx].n.replace("เพื่อน", ""); }).join(", ");
+    sloganText += " (ผสมผสานกับ " + otherNames + ")";
+  }
+  ctx.fillText(sloganText, W / 2, curY);
+
+  // 7. คำอธิบายจุดเด่น
+  curY += 54;
+  ctx.font = "500 27px 'Anuphan', sans-serif";
+  ctx.fillStyle = theme.textMain;
+  var descLines = wrapThaiText(ctx, t.d, cardW - 140);
+  descLines.forEach(function(line) {
+    ctx.fillText(line, W / 2, curY);
+    curY += 40;
+  });
+
+  // 8. ป้ายจุดเด่น (Tips Tags)
+  curY += 16;
+  ctx.font = "600 23px 'Anuphan', sans-serif";
+  var tagGap = 16;
+  var tagMetrics = t.tips.map(function(tip) {
+    var txt = "✓ " + tip;
+    return { text: txt, width: ctx.measureText(txt).width + 44 };
+  });
+  var totalTagsW = tagMetrics.reduce(function(acc, item) { return acc + item.width; }, 0) + tagGap * (tagMetrics.length - 1);
+  var startTagX = W / 2 - totalTagsW / 2;
+
+  tagMetrics.forEach(function(item) {
+    roundRectPath(ctx, startTagX, curY - 23, item.width, 46, 23);
+    ctx.fillStyle = t.color + "20";
+    ctx.fill();
+    ctx.fillStyle = t.color;
+    ctx.fillText(item.text, startTagX + item.width / 2, curY);
+    startTagX += item.width + tagGap;
+  });
+
+  // 9. กล่องข้อควรระวัง / คำแนะนำใจ
+  curY += 56;
+  var reminderBoxX = cardX + 56;
+  var reminderBoxW = cardW - 112;
+  var reminderBoxH = 74;
+  roundRectPath(ctx, reminderBoxX, curY, reminderBoxW, reminderBoxH, 24);
+  ctx.fillStyle = theme.isDark ? "rgba(245, 158, 11, 0.14)" : "#fffbeb";
+  ctx.fill();
+  ctx.strokeStyle = "rgba(245, 158, 11, 0.35)";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.font = "600 24px 'Anuphan', sans-serif";
+  ctx.fillStyle = theme.isDark ? "#fcd34d" : "#b45309";
+  ctx.fillText("💡 " + t.g, W / 2, curY + reminderBoxH / 2);
+
+  // 10. ส่วนแสดงผลคะแนนทั้ง 6 มิติ (กราฟเรดาร์ด้านซ้าย + แถบคะแนนด้านขวา)
+  curY += reminderBoxH + 30;
+  var statsBoxX = cardX + 56;
+  var statsBoxW = cardW - 112;
+  var statsBoxH = 360;
+
+  roundRectPath(ctx, statsBoxX, curY, statsBoxW, statsBoxH, 32);
+  ctx.fillStyle = theme.boxBg;
+  ctx.fill();
+  ctx.strokeStyle = theme.isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)";
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // 10.1 วาด Mini Radar Chart ฝั่งซ้าย
+  var radarCx = statsBoxX + 195;
+  var radarCy = curY + statsBoxH / 2 + 8;
+  var radarR = 105;
+  var gridStroke = theme.isDark ? "rgba(255,255,255,0.16)" : "rgba(42,33,48,0.12)";
+
+  for (var lv = 1; lv <= 5; lv++) {
+    var rr = (radarR / 5) * lv;
+    ctx.beginPath();
+    for (var j = 0; j < 6; j++) {
+      var ang = (Math.PI * 2 * j) / 6 - Math.PI / 2;
+      var gx = radarCx + rr * Math.cos(ang);
+      var gy = radarCy + rr * Math.sin(ang);
+      if (j === 0) ctx.moveTo(gx, gy);
+      else ctx.lineTo(gx, gy);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = gridStroke;
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+  }
+
+  for (var j = 0; j < 6; j++) {
+    var ang = (Math.PI * 2 * j) / 6 - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(radarCx, radarCy);
+    ctx.lineTo(radarCx + radarR * Math.cos(ang), radarCy + radarR * Math.sin(ang));
+    ctx.strokeStyle = gridStroke;
+    ctx.stroke();
+  }
+
+  ctx.beginPath();
+  for (var j = 0; j < 6; j++) {
+    var scVal = Math.max(lastScores[j], 5);
+    var pr = (scVal / 25) * radarR;
+    var ang = (Math.PI * 2 * j) / 6 - Math.PI / 2;
+    var px = radarCx + pr * Math.cos(ang);
+    var py = radarCy + pr * Math.sin(ang);
+    if (j === 0) ctx.moveTo(px, py);
+    else ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+  ctx.fillStyle = t.color + "44";
+  ctx.fill();
+  ctx.strokeStyle = t.color;
+  ctx.lineWidth = 3.5;
+  ctx.stroke();
+
+  ctx.font = "24px sans-serif";
+  for (var j = 0; j < 6; j++) {
+    var ang = (Math.PI * 2 * j) / 6 - Math.PI / 2;
+    var lx = radarCx + (radarR + 28) * Math.cos(ang);
+    var ly = radarCy + (radarR + 28) * Math.sin(ang);
+    ctx.fillText(T[j].e, lx, ly);
+  }
+
+  // 10.2 วาดแถบคะแนนทั้ง 6 สายฝั่งขวา
+  var barsStartX = statsBoxX + 380;
+  var barsEndX = statsBoxX + statsBoxW - 36;
+  var barWidth = barsEndX - barsStartX;
+  var barRowY = curY + 42;
+  var rowStep = 53;
+
+  T.forEach(function(item, idx) {
+    var scVal = lastScores[idx];
+    var pct = scVal / 25;
+
+    ctx.textAlign = "left";
+    ctx.font = "600 21px 'Anuphan', sans-serif";
+    ctx.fillStyle = theme.textMain;
+    ctx.fillText(item.e + " " + item.n, barsStartX, barRowY);
+
+    ctx.textAlign = "right";
+    ctx.font = "700 21px 'Prompt', sans-serif";
+    ctx.fillStyle = item.color;
+    ctx.fillText(scVal + "/25", barsEndX, barRowY);
+
+    // พื้นหลังหลอดคะแนน
+    roundRectPath(ctx, barsStartX, barRowY + 14, barWidth, 12, 6);
+    ctx.fillStyle = theme.isDark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)";
+    ctx.fill();
+
+    // เนื้อหลอดคะแนน
+    var fillW = Math.max(12, barWidth * pct);
+    roundRectPath(ctx, barsStartX, barRowY + 14, fillW, 12, 6);
+    ctx.fillStyle = item.color;
+    ctx.fill();
+
+    barRowY += rowStep;
+  });
+
+  // 11. ป้าย "เพื่อนที่ฉันตามหา" (หากผู้ใช้กดเลือกไว้) และส่วนท้ายการ์ด
+  var footerY = cardY + cardH - 52;
+  ctx.textAlign = "center";
+
+  if (want >= 0 && T[want]) {
+    var wt = T[want];
+    var wantLabel = "🔎 เพื่อนที่ฉันกำลังตามหา: " + wt.e + " " + wt.n + " (“" + wt.s + "”)";
+    ctx.font = "600 23px 'Anuphan', sans-serif";
+    var wBadgeW = Math.min(ctx.measureText(wantLabel).width + 52, cardW - 112);
+    var wBadgeY = footerY - 62;
+    roundRectPath(ctx, W / 2 - wBadgeW / 2, wBadgeY - 22, wBadgeW, 44, 22);
+    ctx.fillStyle = wt.color + "22";
+    ctx.fill();
+    ctx.fillStyle = wt.color;
+    ctx.fillText(wantLabel, W / 2, wBadgeY);
+  }
+
+  // วันที่และเครดิตด้านล่างสุดของการ์ด
+  var todayStr = "";
+  try {
+    todayStr = new Date().toLocaleDateString("th-TH", {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    });
+  } catch (e) {}
+
+  ctx.font = "500 20px 'Anuphan', sans-serif";
+  ctx.fillStyle = theme.textMuted;
+  ctx.fillText(
+    "🫶 แบบประเมินมิตรภาพ 6 มิติ • ฉันเป็นเพื่อนแบบไหน?" + (todayStr ? " • " + todayStr : ""),
+    W / 2,
+    footerY
+  );
+}
+
+/**
+ * ฟังก์ชันคัดลอกข้อความลง Clipboard (รองรับ iframe)
+ */
+function copyToClipboard(text) {
+  var ta = document.createElement("textarea");
+  ta.value = text;
+  ta.style.position = "fixed";
+  ta.style.left = "-9999px";
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand("copy");
+  } catch (err) {}
+  document.body.removeChild(ta);
+}
+
+/**
+ * วาดกราฟเรดาร์ (Spider/Radar Chart) ด้วย HTML5 Canvas
+ */
+function drawRadarChart(scores) {
+  var canvas = document.getElementById("radar-chart");
+  if (!canvas) return;
+  var ctx = canvas.getContext("2d");
+  var dpr = window.devicePixelRatio || 1;
+  var width = 300;
+  var height = 280;
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
+  ctx.scale(dpr, dpr);
+
+  var isDark = document.documentElement.classList.contains("dark");
+  var gridColor = isDark ? "rgba(255, 255, 255, 0.14)" : "rgba(42, 33, 48, 0.12)";
+  var textColor = isDark ? "#f6f2fa" : "#2a2130";
+
+  var cx = width / 2;
+  var cy = height / 2 + 4;
+  var radius = 92;
+  var total = 6;
+
+  ctx.clearRect(0, 0, width, height);
+
+  // วาดเส้นโครงข่าย 5 ระดับ
+  for (var level = 1; level <= 5; level++) {
+    var r = (radius / 5) * level;
+    ctx.beginPath();
+    for (var j = 0; j < total; j++) {
+      var angle = (Math.PI * 2 * j) / total - Math.PI / 2;
+      var x = cx + r * Math.cos(angle);
+      var y = cy + r * Math.sin(angle);
+      if (j === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = gridColor;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  // วาดแกนทั้ง 6 มุม
+  for (var j = 0; j < total; j++) {
+    var angle = (Math.PI * 2 * j) / total - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + radius * Math.cos(angle), cy + radius * Math.sin(angle));
+    ctx.strokeStyle = gridColor;
+    ctx.stroke();
+  }
+
+  // วาดพื้นที่คะแนนของผู้ใช้
+  ctx.beginPath();
+  for (var j = 0; j < total; j++) {
+    var val = Math.max(scores[j], 5); // ขั้นต่ำ 5 จาก 25
+    var r = (val / 25) * radius;
+    var angle = (Math.PI * 2 * j) / total - Math.PI / 2;
+    var x = cx + r * Math.cos(angle);
+    var y = cy + r * Math.sin(angle);
+    if (j === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = "rgba(255, 107, 66, 0.28)";
+  ctx.fill();
+  ctx.strokeStyle = "#ff6b42";
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // วาดจุดยอดและป้ายกำกับแต่ละด้าน
+  ctx.font = "600 12px 'Anuphan', sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  for (var j = 0; j < total; j++) {
+    var val = Math.max(scores[j], 5);
+    var r = (val / 25) * radius;
+    var angle = (Math.PI * 2 * j) / total - Math.PI / 2;
+    var px = cx + r * Math.cos(angle);
+    var py = cy + r * Math.sin(angle);
+
+    // จุดสีประจำสาย
+    ctx.beginPath();
+    ctx.arc(px, py, 4.5, 0, Math.PI * 2);
+    ctx.fillStyle = T[j].color;
+    ctx.fill();
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // ป้ายชื่อด้านนอก
+    var labelRadius = radius + 28;
+    var lx = cx + labelRadius * Math.cos(angle);
+    var ly = cy + labelRadius * Math.sin(angle);
+    ctx.fillStyle = textColor;
+    var shortName = T[j].e + " " + T[j].n.replace("เพื่อนสาย", "");
+    ctx.fillText(shortName, lx, ly);
+  }
+}
+
+/**
+ * เอฟเฟกต์ Confetti ฉลองผลลัพธ์
+ */
+function launchConfetti() {
+  var canvas = document.getElementById("confetti-canvas");
+  if (!canvas) return;
+  canvas.classList.remove("hidden");
+  var ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  var colors = ["#ff6b42", "#f59e0b", "#10b981", "#3b82f6", "#8b5cf6", "#ec4899"];
+  var pieces = [];
+  for (var p = 0; p < 55; p++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * -canvas.height * 0.5,
+      w: 7 + Math.random() * 6,
+      h: 10 + Math.random() * 6,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vy: 2.5 + Math.random() * 3.5,
+      vx: -1.5 + Math.random() * 3,
+      rot: Math.random() * Math.PI * 2,
+      vrot: -0.08 + Math.random() * 0.16
+    });
+  }
+
+  var frame = 0;
+  function tick() {
+    frame++;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    var active = false;
+    pieces.forEach(function(it) {
+      it.x += it.vx;
+      it.y += it.vy;
+      it.rot += it.vrot;
+      if (it.y < canvas.height + 20) active = true;
+
+      ctx.save();
+      ctx.translate(it.x, it.y);
+      ctx.rotate(it.rot);
+      ctx.fillStyle = it.color;
+      ctx.fillRect(-it.w / 2, -it.h / 2, it.w, it.h);
+      ctx.restore();
+    });
+
+    if (active && frame < 180) {
+      requestAnimationFrame(tick);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      canvas.classList.add("hidden");
+    }
+  }
+  requestAnimationFrame(tick);
+}
+
+// คลิกโลโก้ด้านบนเพื่อกลับหน้าแรก
+document.getElementById("brand-home").onclick = intro;
+
+// เริ่มต้นแอป
+initTheme();
 intro();
 </script>
 </body>
